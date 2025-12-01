@@ -1,0 +1,23 @@
+{
+  "routerMap": [
+    {
+      "name": "Dashboard",
+      "pageSourceFile": "src/main/ets/pages/Dashboard.ets",
+      "buildFunction": "PageOneBuilder",
+      "data": {
+        "description": "this is pageOne"
+      }
+    },
+    {
+      "name": "Graph",
+      "pageSourceFile": "src/main/ets/pages/Graph.ets",
+      "buildFunction": "PageTwoBuilder"
+    },
+    {
+      "name": "ClearWatch",
+      "pageSourceFile": "src/main/ets/pages/ClearWatch.ets",
+      "buildFunction": "PageThreeBuilder"
+    }
+
+  ]
+}
