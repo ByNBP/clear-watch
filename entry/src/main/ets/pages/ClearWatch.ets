@@ -45,12 +45,12 @@ struct ClearWatch {
 
           if (this.vm.cacheFiles.length > 0) {
             List() {
-              ForEach(this.vm.deletedFiles, (file: string) => {
+              ForEach(this.vm.deletedFiles, (file: string , index:number) => {
                 ListItem() {
                   Text(`🗑️ ${file}`).textAlign(TextAlign.Center).width('100%')
-                    .fontSize(10).fontColor(Color.Black);
+                    .fontSize(10).fontColor(Color.Black)
                 }
-              });
+              },(file: string , index:number) => file)
 
             }.margin({ top: 10 });
           }

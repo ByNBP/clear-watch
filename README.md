@@ -10,11 +10,14 @@ charts.
 # Preview
 
 <div>
-  <img src="screenshots/Screenshots1.png" width="24%">
-  <img src="screenshots/Screenshots2.png" width="24%">
-  <img src="screenshots/Screenshots3.png" width="24%">
-  <img src="screenshots/Screenshots4.png" width="24%">
+
+<img src="screenshots/Screenshots2.png" width="24%" >
+  <img src="screenshots/Screenshots3.png" width="24%" >
+  <img src="screenshots/Screenshots4.png" width="24%" >
+<img src="screenshots/Screenshots6.png" width="24%" >
 </div>
+
+
 # Use Cases
 With this application, you can access the clock's memory usage and CPU values. You can see them visually with a graph. On the last page, you can access and clear the catches within the application.
 
@@ -72,4 +75,4 @@ With this application, you can access the clock's memory usage and CPU values. Y
 # License
 
 **ClearWatch** is distributed under the terms of the MIT License
-See the [LICENSE](../../Downloads/LICENSE) for more information.
+See the [LICENSE](./LICENSE) for more information.

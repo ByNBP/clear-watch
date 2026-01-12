@@ -1,13 +1,13 @@
 import { VChart } from '@visactor/harmony-vchart';
 import { Cpu } from '../model/Cpu';
-import { CpuViewModel } from '../viewmodel/CpuViewModel';
+import { CpuViewModel } from '../viewmodel/CpuViewModel'
 
 interface Event {
   item: ItemType
 }
 
 interface ItemType {
-  addState(str: string): void;
+  addState(str: string): void
 }
 
 
@@ -39,34 +39,35 @@ export struct Graph {
       this.cpu.getGraphicsMemory = mem
     })
   }
-  @State spec:Record<string, string|ESObject> = {
+
+  @State spec: Record<string, string | ESObject> = {
     'type': 'bar',
     'data': {
       values: ([
         {
-          'type':'Total Memory',
-          'value':Number(this.cpu.getSystemMemInfo.totalMem)
+          'type': 'Total Memory',
+          'value': Number(this.cpu.getSystemMemInfo.totalMem)
         },
         {
-          'type':'Free Memory',
-          'value':Number(this.cpu.getSystemMemInfo.freeMem)
+          'type': 'Free Memory',
+          'value': Number(this.cpu.getSystemMemInfo.freeMem)
         },
         {
-          'type':'Available Memory',
-          'value':Number(this.cpu.getSystemMemInfo.availableMem)
+          'type': 'Available Memory',
+          'value': Number(this.cpu.getSystemMemInfo.availableMem)
         },
         {
-          'type':'Cpu Usage',
-          'value':this.cpu.getCpuUsage
+          'type': 'Cpu Usage',
+          'value': this.cpu.getCpuUsage
         },
         {
-          'type':'System Cpu Usage',
-          'value':this.cpu.getSystemCpuUsage
+          'type': 'System Cpu Usage',
+          'value': this.cpu.getSystemCpuUsage
         },
         {
-          'type':'Graphics Memory',
-          'value':this.cpu.getGraphicsMemory
-        },
+          'type': 'Graphics Memory',
+          'value': this.cpu.getGraphicsMemory
+        }
       ]) as ESObject
     },
     'xField': ['type'],
@@ -91,34 +92,34 @@ export struct Graph {
   }
 
   build() {
-   NavDestination(){
-     Row() {
-       Column() {
-         VChart({
-           spec: this.spec,
-w: 200,
-h:200,
-           onChartInitCb: (vchart) => {
-             return;
-           },
-           onChartReadyCb: (vchart) => {
-             vchart.on('touchstart', {level: 'mark', type: 'bar'}, (e: Event) => {
-               e.item.addState('aaa')
-             })
-           },
-           initOption: {
-             beforeRender: () => {
-               // this.t = Date.now();
-             },
-             afterRender: () => {
-               // this.delta = Date.now() - this.t;
-             }
-           }
-         });
-       }
-       .width('100%')
-     }
-     .height('100%')
-   }.hideBackButton(true)
+    NavDestination() {
+      Row() {
+        Column() {
+          VChart({
+            spec: this.spec,
+            w: 200,
+            h: 200,
+            onChartInitCb: (vchart) => {
+              return
+            },
+            onChartReadyCb: (vchart) => {
+              vchart.on('touchstart', { level: 'mark', type: 'bar' }, (e: Event) => {
+                e.item.addState('aaa')
+              })
+            },
+            initOption: {
+              beforeRender: () => {
+
+              },
+              afterRender: () => {
+
+              }
+            }
+          });
+        }
+        .width('100%')
+      }
+      .height('100%')
+    }.hideBackButton(true)
   }
 }
