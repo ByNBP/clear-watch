@@ -12,6 +12,13 @@
     "pages": "$profile:main_pages",
 
     "requestPermissions": [
+      {
+        "name": "ohos.permission.ACCELEROMETER",
+        "reason": "$string:app_name",
+        "usedScene": {
+          "when": "always"
+        }
+      },
       {"reason": "$string:app_name",
         "name": "ohos.permission.READ_MEDIA",
         "usedScene": {
@@ -63,6 +70,13 @@
             "resource": "$profile:backup_config"
           }
         ]
+      },
+      {
+        "name": "WorkSchedulerAbility",
+        "srcEntry": "./ets/workability/WorkSchedulerAbility.ets",
+        "type": "workScheduler",
+        "exported": false,
+        "label": "$string:app_name"
       }
     ]
   }
