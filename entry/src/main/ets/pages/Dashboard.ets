@@ -12,7 +12,7 @@ export function PageOneBuilder(name: string, param: Object) {
 @Component
 export struct Dashboard {
   vm: CpuViewModel = new CpuViewModel()
-  pageInfos: NavPathStack = new NavPathStack();
+  @Consume('pageInfos') pageInfos: NavPathStack;
   context = this.getUIContext().getHostContext() as common.UIAbilityContext
   cpu: Cpu = new Cpu()
 
@@ -37,25 +37,32 @@ export struct Dashboard {
 
   build() {
     NavDestination(){
-      Column() {
-        Text('Dashboard').fontSize('16px').textAlign(TextAlign.Center)
-        Column() {
-          Text(`CPU Process Usage: ${this.cpu.getCpuUsage}`).fontSize('16px')
-          Text(`System Cpu Usage: ${this.cpu.getSystemCpuUsage}`).fontSize('16px')
-        }.width('100%').justifyContent(FlexAlign.SpaceEvenly)
-
-        Column() {
-          Text(`Cpu Graphic Memory : ${this.cpu.getGraphicsMemory}`).fontSize('16px')
+      Scroll() {
+        Column({ space: 10 }) {
+          Text('Dashboard').fontSize('20px').fontWeight(FontWeight.Bold).textAlign(TextAlign.Center)
           Column() {
-            Text(`System Total Memory : ${this.cpu.getSystemMemInfo.totalMem}`).fontSize('16px')
-            Text(`System Free Memory : ${this.cpu.getSystemMemInfo.freeMem}`).fontSize('16px')
-            Text(`System Available Memory : ${this.cpu.getSystemMemInfo.availableMem}`).fontSize('16px')
-          }
-        }.width('100%').justifyContent(FlexAlign.SpaceEvenly)
+            Text(`CPU Process Usage: ${this.cpu.getCpuUsage.toFixed(2)}%`).fontSize('14px')
+            Text(`System Cpu Usage: ${this.cpu.getSystemCpuUsage.toFixed(2)}%`).fontSize('14px')
+          }.width('100%').alignItems(HorizontalAlign.Center)
 
+          Column() {
+            Text(`Graphic Memory : ${this.cpu.getGraphicsMemory}`).fontSize('14px')
+            Text(`Total Mem : ${this.cpu.getSystemMemInfo.totalMem} KB`).fontSize('14px')
+            Text(`Free Mem : ${this.cpu.getSystemMemInfo.freeMem} KB`).fontSize('14px')
+            Text(`Avail Mem : ${this.cpu.getSystemMemInfo.availableMem} KB`).fontSize('14px')
+          }.width('100%').alignItems(HorizontalAlign.Center)
+
+          Button('View History')
+            .onClick(() => {
+              this.pageInfos.pushPath({ name: 'HistoryPage' })
+            })
+            .width('80%')
+            .height(30)
+            .fontSize(12)
+        }
+        .width('100%')
+        .padding({ bottom: 20 })
       }
-      .height('100%')
-      .width('100%').alignItems(HorizontalAlign.Center).justifyContent(FlexAlign.Center)
     }.hideBackButton(true)
   }
 }

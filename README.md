@@ -1,6 +1,15 @@
-> **Note:** To access all shared projects, get information about environment setup, and view other guides, please visit [Explore-In-HMOS-Wearable Index](https://github.com/Explore-In-HMOS-Wearable/hmos-index).
-
 # ClearWatch
+
+**What's New in the Scenario Expansion**
+- **Background Performance Auditor**: Automated system health checks using `@kit.BackgroundTasksKit`.
+- **Intelligent Notifications**: Proactive alerts for high resource usage via `@kit.NotificationKit`.
+- **24-Hour Performance History**: Persistence of CPU and memory metrics using `@kit.ArkData`.
+- **Shake-to-Clean Gesture**: Wrist-shake based cache optimization powered by `@kit.SensorServiceKit`.
+- **Enhanced Data Layer**: Preferences-based storage for user settings and historical snapshots.
+
+---
+
+> **Note:** To access all shared projects, get information about environment setup, and view other guides, please visit [Explore-In-HMOS-Wearable Index](https://github.com/Explore-In-HMOS-Wearable/hmos-index).
 
 The ClearWatch app provides real-time CPU performance monitoring along with the ability to scan and clean application
 cache files on HarmonyOS wearable devices.
@@ -26,7 +35,7 @@ With this application, you can access the clock's memory usage and CPU values. Y
 - **Languages**: ArkTS, ArkUI
 - **Frameworks**: HarmonyOS 5.1.0(18)
 - **Tools**: DevEco Studio Vers 5.1.0.828SP1,
-- **Libraries**: @kit.ArkUI, @kit.AbilityKit,@kit.PerformanceAnalysisKit,@visactor/harmony-vchart,@ohos/lottie
+- **Libraries**: @kit.ArkUI, @kit.AbilityKit,@kit.PerformanceAnalysisKit,@visactor/harmony-vchart,@ohos/lottie,@kit.ArkData,@kit.BackgroundTasksKit,@kit.NotificationKit,@kit.SensorServiceKit
 
 # Directory Structure
 
@@ -47,18 +56,23 @@ With this application, you can access the clock's memory usage and CPU values. Y
 │       ClearWatch.ets
 │       Dashboard.ets
 │       Graph.ets
+│       HistoryPage.ets
 │       Index.ets
 │       SplashScreen.ets
 │
 ├───service
+│       BackgroundMonitorService.ets
 │       FileCleanerService.ets
 │
 ├───util
 │       CpuHelper.ets
+│       GestureHelper.ets
+│       PreferenceManager.ets
 │
 └───viewmodel
         ClearWatchViewModel.ets
         CpuViewModel.ets
+        HistoryViewModel.ets
 
 ```
 

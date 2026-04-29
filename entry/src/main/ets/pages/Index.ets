@@ -1,45 +1,34 @@
 @Entry
 @Component
 export struct Index {
-  pageInfos: NavPathStack = new NavPathStack();
+  @Provide('pageInfos') pageInfos: NavPathStack = new NavPathStack();
   scroll : Scroller = new Scroller()
 
-  aboutToAppear(): void {
-
-  }
-
   build() {
-
     Navigation(this.pageInfos) {
+      Scroll(this.scroll){
+        Column({ space: 10 }) {
+          Text('ClearWatch').fontSize(24).fontWeight(FontWeight.Bold).margin({ bottom: 20 })
 
-  Scroll(this.scroll){
-    Column() {
-      Button('Dashboard')
-        .width('80%').height(30)
+          Button('Dashboard')
+            .width('80%').height(40)
+            .onClick(() => {
+              this.pageInfos.pushPath({ name: 'Dashboard' });
+            })
 
-        .onClick(() => {
-          this.pageInfos.pushPath({
-            name: 'Dashboard'
-          }); // Push the navigation destination page specified by name to the routing stack.
-        })
-      Button('Graph').width('80%').height(30).margin({ top:8 })
+          Button('Performance Graph')
+            .width('80%').height(40)
+            .onClick(() => {
+              this.pageInfos.pushPath({ name: 'Graph' });
+            })
 
-        .onClick(() => {
-          this.pageInfos.pushPath({
-            name: 'Graph'
-          }); // Push the navigation destination page specified by name to the routing stack.
-        })
-      Button('Clear Watch').width('80%').height(30).margin({ top:8 })
-
-        .onClick(() => {
-          this.pageInfos.pushPath({
-            name: 'ClearWatch'
-          }); // Push the navigation destination page specified by name to the routing stack.
-        })
-    }.justifyContent(FlexAlign.Center)
-  }.width('100%').height('100%').backgroundColor(Color.White)
-
+          Button('Cache Cleaner')
+            .width('80%').height(40)
+            .onClick(() => {
+              this.pageInfos.pushPath({ name: 'ClearWatch' });
+            })
+        }.width('100%').justifyContent(FlexAlign.Center).padding({ top: 40, bottom: 40 })
+      }.width('100%').height('100%').backgroundColor(Color.White)
     }.title('NavIndex').hideTitleBar(true)
-
   }
 }

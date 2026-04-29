@@ -1,5 +1,6 @@
 import { ClearWatchViewModel } from '../viewmodel/ClearWatchViewModel';
 import { common } from '@kit.AbilityKit';
+import { GestureHelper } from '../util/GestureHelper';
 
 
 @Builder
@@ -13,6 +14,18 @@ struct ClearWatch {
   context = this.getUIContext().getHostContext() as common.UIAbilityContext
   scroll: Scroller = new Scroller()
   @State status :string= ''
+
+  aboutToAppear(): void {
+    GestureHelper.getInstance().startShakeDetection(() => {
+      this.vm.clearCache(this.context, (status) => {
+        this.status = `Shake Clean: ${status}`
+      })
+    })
+  }
+
+  aboutToDisappear(): void {
+    GestureHelper.getInstance().stopShakeDetection()
+  }
 
   build() {
     NavDestination() {

@@ -1,12 +1,16 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
+import { PreferenceManager } from '../util/PreferenceManager';
+import { BackgroundMonitorService } from '../service/BackgroundMonitorService';
 
 const DOMAIN = 0x0000;
 
 export default class EntryAbility extends UIAbility {
-  onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+  async onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): Promise<void> {
     this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET);
+    await PreferenceManager.getInstance().init(this.context);
+    BackgroundMonitorService.getInstance().registerAuditTask();
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onCreate');
   }
 

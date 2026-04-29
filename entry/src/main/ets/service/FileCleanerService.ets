@@ -2,11 +2,12 @@ import { fileIo as fs, ListFileOptions } from '@kit.CoreFileKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 
 export class FileCleanerService {
-  cacheDirPath: string = ''; // HarmonyOS'ta tipik cache dizini
+  cacheDirPath: string = '';
   deletedFiles: string[] = [];
-   listCache = ['']
-  async listCacheFiles(context: Context): Promise<string[]> {
+  listCache: string[] = [];
 
+  async listCacheFiles(context: Context): Promise<string[]> {
+    this.cacheDirPath = context.cacheDir;
     let listFileOption: ListFileOptions = {
       recursion: false,
       listNum: 0,
@@ -15,54 +16,37 @@ export class FileCleanerService {
         displayName: ['*cache*', '*temp*', '*tmp*', '*cleanup*'],
         fileSizeOver: 0
       }
-    }
-    this.cacheDirPath = context.cacheDir
-    fs.listFile(this.cacheDirPath, listFileOption).then((filenames: Array<string>) => {
-      console.info('listFile succeed');
-      for (let i = 0; i < filenames.length; i++) {
-        console.info('fileName: %s', filenames[i]);
-        this.listCache[i] = filenames[i]
-        this.deletedFiles[i]=filenames[i]
-      }
-    }).catch((err: BusinessError) => {
+    };
 
-    });
-    return this.listCache
+    try {
+      let filenames = await fs.listFile(this.cacheDirPath, listFileOption);
+      this.listCache = filenames;
+      return filenames;
+    } catch (err) {
+      console.error(`listFile failed. Code: ${(err as BusinessError).code}, message: ${(err as BusinessError).message}`);
+      return [];
+    }
   }
 
   async clearCache(context: Context): Promise<string[]> {
-
-    this.cacheDirPath = context.cacheDir
+    this.cacheDirPath = context.cacheDir;
+    this.deletedFiles = [];
 
     try {
-      let listFileOption: ListFileOptions = {
-        recursion: false,
-        listNum: 0,
-        filter: {
-          suffix: ['.tmp', '.cache', '.log', '.bak'],
-          displayName: ['*cache*', '*temp*', '*tmp*', '*cleanup*'],
-          fileSizeOver: 0
+      let filenames = await this.listCacheFiles(context);
+      for (let filename of filenames) {
+        try {
+          await fs.rmdir(`${this.cacheDirPath}/${filename}`);
+          this.deletedFiles.push(filename);
+        } catch (err) {
+          console.error(`Failed to remove ${filename}. Code: ${(err as BusinessError).code}`);
         }
       }
-      fs.listFile(this.cacheDirPath, listFileOption).then((filenames: Array<string>) => {
-        console.info('listFile succeed');
-        for (let i = 0; i < filenames.length; i++) {
-          console.info('fileName: %s', filenames[i]);
-          fs.rmdir(`${this.cacheDirPath}/${filenames[i]}`).then(() => {
-            console.info('File removed');
-            this.listCache=[]
-          }).catch((err: BusinessError) => {
-
-          });
-        }
-      }).catch((err: BusinessError) => {
-
-      });
-
+      this.listCache = [];
+      return this.deletedFiles;
     } catch (err) {
-
+      console.error(`clearCache failed. Code: ${(err as BusinessError).code}`);
+      return [];
     }
-
-    return this.deletedFiles;
   }
 }

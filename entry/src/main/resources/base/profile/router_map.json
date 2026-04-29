@@ -17,7 +17,11 @@
       "name": "ClearWatch",
       "pageSourceFile": "src/main/ets/pages/ClearWatch.ets",
       "buildFunction": "PageThreeBuilder"
+    },
+    {
+      "name": "HistoryPage",
+      "pageSourceFile": "src/main/ets/pages/HistoryPage.ets",
+      "buildFunction": "HistoryPageBuilder"
     }
-
   ]
 }
